@@ -49,4 +49,4 @@ The packet structure is listed as below;
 
     Checksum is for checking packet integrity.<br>
    When you click the 'TRANSMIT' button, this program will calculate checksum automatically.<br>
-    At recevier side, add all byte of each packets including checksum and if its result's lower byte is 0x00 it means it has no problem.
+    At recevier side, add all byte of each packets including checksum and if its result's lower byte is 0x00 it means it has no problem and the packet was transmitted successfully.
