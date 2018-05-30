@@ -4,6 +4,7 @@ import serial
 
 ser = []
 packet = []
+baud = 57600
 
 class uint8_arr(Array):
     _type_ = c_uint8
@@ -14,8 +15,7 @@ class union(Union):
 
 # find enable COM PORT
 def findEnableCOMPort():
-    baud = 57600
-    for i in range(0, 30):
+    for i in range(0, 100):
         try:
             serObj = serial.Serial(
                 port="COM{num}".format(num = str(i)),\
@@ -24,8 +24,9 @@ def findEnableCOMPort():
                 stopbits=serial.STOPBITS_ONE,\
                 bytesize=serial.EIGHTBITS,\
                 timeout = 0)
-            ser.append(serObj)
-        except Exception:
+            ser.append(serObj.port)
+            serObj.close()
+        except:
             pass
     return ser
 
@@ -53,13 +54,27 @@ def makePacket(gainType, gainValue):
     packet.append(checksum)
 
 # Transmit Packet
-def transmitPacket(ser, gainType, gainValue):
+def transmitPacket(portNum, baudRate, gainType, gainValue):
     makePacket(gainType, gainValue)
+
+    try:
+        ser = serial.Serial(
+            port=portNum,\
+            baudrate=baudRate,\
+            parity=serial.PARITY_NONE,\
+            stopbits=serial.STOPBITS_ONE,\
+            bytesize=serial.EIGHTBITS,\
+            timeout = 0)
+    except:
+        pass
 
     for data in packet:
         print(format(data, '#04x'), end=' ')
         ser.write(c_uint8(data))
-        QtTest.QTest.qWait(30)
+        QtTest.QTest.qWait(10)
+
+    QtTest.QTest.qWait(50)
 
     print('')
     packet.clear()
+
