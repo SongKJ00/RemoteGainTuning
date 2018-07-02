@@ -3,6 +3,8 @@ GUI for Remote Gain Tuning with Zigbee(for Drone)
 
 If you download the .exe file, you can tune gain value of your own drone with zigbee.
 
+In my project, I used 4 PID controllers for controlling Roll, Pitch, Yaw, Altitude.
+
 For use this program, you should connect zigbee module with USB to TTL, and connect that to computer USB port.
 
 ## Packet Structure
@@ -34,6 +36,9 @@ The packet structure is listed as below;
   | 0x47 | Yaw P Gain |
   | 0x48 | Yaw I Gain |
   | 0x49 | Yaw D Gain |
+  | 0x77 | Altitude P Gain |
+  | 0x78 | Altitude I Gain |
+  | 0x79 | Altitude D Gain |
   
   
 * Payload<br>

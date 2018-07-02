@@ -37,7 +37,9 @@ def makePacket(gainType, gainValue):
     gainUnion.data = gainValue
 
 
-    packet.append(83)
+    #packet.append(83)
+    #packet.append(serial.to_bytes([0x53]))
+    packet.append(0x53)
     packet.append(77)
     packet.append(gainType)
     packet.append(gainUnion.buff[0])
